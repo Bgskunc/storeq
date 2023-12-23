@@ -1,3 +1,4 @@
+import AuthLayout from '@/components/layouts/AuthLayout';
 import Input from '@/components/ui/Input';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
@@ -40,35 +41,25 @@ export default function LoginView() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-full flex-col">
-      <h1 className="text-[32px] mt-[5px]">Masuk</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="md:w-[35%] sm:w-[50%] w-full pt-[5px] pb-[20px] px-[20px] mb-[20px]">
-        <form onSubmit={handleSubmit} className="">
-          <Input label="Email" name="email" type="email" placeholder="Masukkan email yang terdaftar" />
-          <Input label="Password" name="password" type="password" placeholder="Password" />
+    <AuthLayout title="Masuk" link="/auth/register" linkText="Belum punya akun ?" linkLabel=" Daftar sekarang" error={error}>
+      <form onSubmit={handleSubmit} className="">
+        <Input label="Email" name="email" type="email" placeholder="Masukkan email yang terdaftar" />
+        <Input label="Password" name="password" type="password" placeholder="Password" />
 
-          <button type="submit" className="bg-slate-600 hover:bg-slate-800 rounded text-white w-full p-[10px] font-bold">
-            {isLoading ? 'Loading...' : 'Masuk'}
-          </button>
-        </form>
-      </div>
-      <div className="relative md:w-[35%] sm:w-[50%] w-full px-[20px] mb-[20px] flex justify-between gap-3">
+        <button type="submit" className="bg-slate-600 hover:bg-slate-800 rounded text-white w-full p-[10px] font-bold">
+          {isLoading ? 'Loading...' : 'Masuk'}
+        </button>
+      </form>
+      <div className="relative w-full my-[20px] flex justify-between gap-3">
         <hr className="w-[43%]" />
         <h2 className="absolute right-[46.5%] -top-3">atau</h2>
         <hr className="w-[43%]" />
       </div>
-      <div className="md:w-[35%] sm:w-[50%] w-full p-[20px]">
+      <div className="w-full">
         <button type="button" onClick={() => signIn('google', { callbackUrl, redirect: false })} className="bg-slate-600 hover:bg-slate-800 rounded text-white w-full p-[10px] font-bold">
           Masuk dengan Google
         </button>
       </div>
-      <p>
-        Belum punya akun?{' '}
-        <Link href="/auth/register" className="font-bold text-slate-700">
-          Ayo daftar
-        </Link>{' '}
-      </p>
-    </div>
+    </AuthLayout>
   );
 }
